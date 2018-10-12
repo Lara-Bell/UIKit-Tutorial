@@ -10,50 +10,63 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private var myButton: UIButton!
+    private var myInfoDarkButton: UIButton!
+    private var myInfoLightButton: UIButton!
+    private var myAddButton: UIButton!
+    private var myDetailButton: UIButton!
+    private var mySystemButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Buttonを生成する
-        myButton = UIButton()
+        // ボタンを生成する
+        myInfoDarkButton = UIButton(type: .infoDark)
+        myInfoLightButton = UIButton(type: .infoLight)
+        myAddButton = UIButton(type: .contactAdd)
+        myDetailButton = UIButton(type: .detailDisclosure)
+        mySystemButton = UIButton(type: .system)
         
-        // ボタンのサイズ
-        let bWidth: CGFloat = 200
-        let bHeight: CGFloat = 50
+        // ボタンの位置を指定する
+        let posX: CGFloat = self.view.frame.width / 2
+        myInfoDarkButton.layer.position = CGPoint(x: posX, y: 50)
+        myInfoLightButton.layer.position = CGPoint(x: posX, y: 100)
+        myAddButton.layer.position = CGPoint(x: posX, y: 150)
+        myDetailButton.layer.position = CGPoint(x: posX, y: 200)
         
-        // ボタンのX,Y座標
-        let posX: CGFloat = self.view.bounds.width / 2 - bWidth / 2
-        let posY: CGFloat = self.view.bounds.height / 2 - bHeight / 2
+        // Systemｐボタンのサイズ
+        let sWidth: CGFloat = 200
+        let sHeight: CGFloat = 50
         
+        // Systemボタンを配置するx y座標
+        let sposX: CGFloat = self.view.frame.width / 2 - sWidth / 2
+        let sposY: CGFloat = 250
+            
         // ボタンの設置座標とサイズを設定する
-        myButton.frame = CGRect(x: posX, y: posY, width: bWidth, height: bHeight)
+        mySystemButton.frame = CGRect(x: sposX, y: sposY, width: sWidth, height: sHeight)
         
-        // UILabelの背景をオレンジ色に
-        myButton.backgroundColor = UIColor.red
+        // Systemボタンにタイトルを設定する
+        mySystemButton.setTitle("MySystemButton", for: .normal)
         
-        // ボタンの枠を丸くする
-        myButton.layer.masksToBounds = true
-        
-        // コーナーの半径を設定する
-        myButton.layer.cornerRadius = 20.0
-        
-        // タイトルを設定する（通常）
-        myButton.setTitle("ボタン(通常)", for: .normal)
-        myButton.setTitleColor(UIColor.white, for: .normal)
-        
-        // タイトルを設定する（ボタンがハイライトされた時）
-        myButton.setTitle("ボタン(押された)", for: .highlighted)
-        myButton.setTitleColor(UIColor.black, for: .highlighted)
-        
-        // ボタンにタグを付ける
-        myButton.tag = 1
+        // タグを設定する
+        myInfoDarkButton.tag = 1
+        myInfoLightButton.tag = 2
+        myAddButton.tag = 3
+        myDetailButton.tag = 4
+        mySystemButton.tag = 5
         
         // イベントを追加する
-        myButton.addTarget(self, action: #selector(ViewController.onclickMyButton(sender:)), for: .touchUpInside)
+        myInfoDarkButton.addTarget(self, action: #selector(ViewController.onclickMyButton(sender:)), for: .touchDown)
+        myInfoLightButton.addTarget(self, action: #selector(ViewController.onclickMyButton(sender:)), for: .touchDown)
+        myAddButton.addTarget(self, action: #selector(ViewController.onclickMyButton(sender:)), for: .touchDown)
+        myDetailButton.addTarget(self, action: #selector(ViewController.onclickMyButton(sender:)), for: .touchDown)
+        mySystemButton.addTarget(self, action: #selector(ViewController.onclickMyButton(sender:)), for: .touchDown)
         
         // ViewにLabelを追加
-        self.view.addSubview(myButton)
+        self.view.addSubview(myInfoDarkButton)
+        self.view.addSubview(myInfoLightButton)
+        self.view.addSubview(myAddButton)
+        self.view.addSubview(myDetailButton)
+        self.view.addSubview(mySystemButton)
     }
     
     override func didReceiveMemoryWarning() {
