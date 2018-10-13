@@ -8,66 +8,36 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController {
 
-    private var myTextField: UITextField!
+    private var myImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // x,yｎと幅の高さを設定
-        let tWidth: CGFloat = 200
-        let tHeight: CGFloat = 30
-        let posX: CGFloat = (self.view.bounds.width - tWidth) /  2
-        let posY: CGFloat = (self.view.bounds.height - tHeight) / 2
+        // サイズ設定
+        let iWidth: CGFloat = 300
+        let iHeight: CGFloat = 100
+        
+        // x, y を設定
+        let posX: CGFloat = (self.view.bounds.width - iWidth) /  2
+        let posY: CGFloat = (self.view.bounds.height - iHeight) / 2
             
-        // UITextFieldを作成
-        myTextField = UITextField(frame: CGRect(x: posX, y: posY, width: tWidth, height: tHeight))
+        // UIImageView作成
+        myImageView = UIImageView(frame: CGRect(x: posX, y: posY, width: iWidth, height: iHeight))
         
-        // 表示するテキストを代入
-        myTextField.text = "Hello TextField"
+        // UIImage作成
+        let myImage: UIImage = UIImage(named: "sample")!
         
-        // Delegateを自身に設定する
-        myTextField.delegate = self
-        
-        // 枠を表示する
-        myTextField.borderStyle = .roundedRect
-        
-        // クリアボタンを追加
-        myTextField.clearButtonMode = .whileEditing
+        // UIImageViewに画像を設定
+        myImageView.image = myImage
         
         // viewに追加
-        self.view.addSubview(myTextField)
+        self.view.addSubview(myImageView)
     }
     
-    /*
-     UITextFieldが編集された直前に呼ばれる
-     カーソルが表示されたタイミング
-     */
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("textFieldDidBeginEditing: \(textField.text!)")
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
-
-    
-    /*
-     UITextFieldが編集された直後に呼ばれる
-     */
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print("textFieldDidEndEditing: \(textField.text!)")
-    }
-    
-    /*
-     改行ボタンが押された際に呼ばれる
-     */
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("textFieldShouldReturn: \(textField.text!)")
-        
-        // 改行ボタンが押されたらKeyboardを閉じる処理
-        textField.resignFirstResponder()
-        
-        return true
-    }
-    
-    
 }
 
