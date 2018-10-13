@@ -7,58 +7,122 @@
 //
 
 import UIKit
+import UserNotifications
 
+@available(iOS 10.0, *)
 class ViewController: UIViewController {
+    
+    private let BUTTON_NORMAL: Int = 1
+    private let BUTTON_FIRE: Int = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 小さめのフォントの文字列をラベルに表示する
-        let mySmallLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 0, width: 300, height: 150))
-        mySmallLabel.text = "小さめのフォント"
-        mySmallLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-        self.view.addSubview(mySmallLabel)
+        // Notificationの表示許可をもらう
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            
+        }
         
-        // Systemの標準のフォントサイズの文字列をラベルを表示する
-        let myNormalLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 30, width: 200, height: 150))
-        myNormalLabel.text = "System標準のフォントサイズ"
-        myNormalLabel.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
-        self.view.addSubview(myNormalLabel)
+        // ボタン
+        let buttonWidth: CGFloat = 200
+        let buttonHeight: CGFloat = 80
+        let posX: CGFloat = (self.view.bounds.width - buttonWidth) / 2
+        let posY: CGFloat = 200
         
-        // UIButton用のフォントサイズの文字列をラベルに表示する
-        let myButtonLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 60, width: 300, height: 150))
-        myButtonLabel.text = "UIButtonのフォントサイズ"
-        myButtonLabel.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize)
-        self.view.addSubview(myButtonLabel)
+        let myButton: UIButton = UIButton(frame: CGRect(x: posX, y: posY, width: buttonWidth, height: buttonHeight))
+        myButton.backgroundColor = UIColor.orange
+        myButton.layer.masksToBounds = true
+        myButton.layer.cornerRadius = 20.0
+        myButton.tag = BUTTON_NORMAL
+        myButton.setTitle("Notification", for: .normal)
+        myButton.addTarget(self, action: #selector(onClickMyButton(sender:)), for: .touchDown)
+        view.addSubview(myButton)
         
-        // カスタムしたフォントサイズ(20)の文字列をラベルに表示する
-        let myCustomLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 90, width: 300, height: 150))
-        myCustomLabel.text = "ポイント20のフォントサイズ"
-        myCustomLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
-        self.view.addSubview(myCustomLabel)
+        // ボタン
+        let posFireX: CGFloat = (self.view.bounds.width - buttonWidth) / 2
+        let posFireY: CGFloat = 400
         
-        // Italic System Fontの文字列をラベルに表示する
-        let myItalicLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 150, width: 300, height: 150))
-        myItalicLabel.text = "Italicのフォント"
-        myItalicLabel.font = UIFont.italicSystemFont(ofSize: UIFont.labelFontSize)
-        self.view.addSubview(myItalicLabel)
-        
-        // Boldの文字列をラベルに表示する
-        let myBoldLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 180, width: 300, height: 150))
-        myBoldLabel.text = "Boldフォント"
-        myBoldLabel.font = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)
-        self.view.addSubview(myBoldLabel)
-        
-        // Arialの文字列をラベルに表示する
-        let myArialLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 230, width: 300, height: 150))
-        myArialLabel.text = "ArialHebrew"
-        myArialLabel.font = UIFont(name: "ArialHebrew", size: UIFont.labelFontSize)
-        self.view.addSubview(myArialLabel)
+        let myFireButton: UIButton = UIButton(frame: CGRect(x: posFireX, y: posFireY, width: buttonWidth, height: buttonHeight))
+        myFireButton.backgroundColor = UIColor.blue
+        myFireButton.layer.masksToBounds = true
+        myFireButton.layer.cornerRadius = 20.0
+        myFireButton.tag = BUTTON_FIRE
+        myFireButton.setTitle("Fire Notification", for: .normal)
+        myFireButton.addTarget(self, action: #selector(onClickMyButton(sender:)), for: .touchDown)
+        view.addSubview(myFireButton)
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    @objc internal func onClickMyButton(sender: UIButton) {
+        print("onClickMyButton")
+        if sender.tag == BUTTON_NORMAL {
+            showNotification()
+        } else if sender.tag == BUTTON_FIRE {
+            showNotificationFire()
+        }
+    }
+    
+    @available(iOS 10.0, *)
+    private func showNotification() {
+        print("showNotificatione")
+        
+        // Notificationを生成
+        let content = UNMutableNotificationContent()
+        
+        // Titleを代入する
+        content.title = "Title1"
+        
+        // Bodyを代入する
+        content.body = "Hello ShowNotification"
+        
+        // 音を設定する
+        content.sound = UNNotificationSound.default
+        
+        // Requestを生成する
+        let request = UNNotificationRequest.init(identifier: "Titile1", content: content, trigger: nil)
+        
+        // Notificationを発行する
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error) in
+            print(error as Any)
+        }
+    }
+    
+    /*
+     Notificationを表示(10秒後)
+     */
+    @available(iOS 10.0, *)
+    private func showNotificationFire() {
+        
+        print("showNotificationFire")
+        
+        // Notificationを生成
+        let content = UNMutableNotificationContent()
+        
+        // Titleを代入する
+        content.title = "Title2"
+        
+        // Bodyを代入する
+        content.body = "Hello ShowNotificationFire"
+        
+        // 音を設定する
+        content.sound = UNNotificationSound.default
+        
+        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 5, repeats: false)
+        
+        // Requestを生成する
+        let request = UNNotificationRequest.init(identifier: "Titile2", content: content, trigger: trigger)
+        
+        // Notificationを発行する
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error) in
+            print(error as Any)
+        }
     }
     
 }
