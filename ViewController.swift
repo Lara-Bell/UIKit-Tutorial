@@ -8,57 +8,58 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    private let myItems: NSArray = ["TEST1", "TEST2", "TEST3"]
-    private var myTableView: UITableView!
+class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // サイズ設定
-        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
+        // 小さめのフォントの文字列をラベルに表示する
+        let mySmallLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 0, width: 300, height: 150))
+        mySmallLabel.text = "小さめのフォント"
+        mySmallLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        self.view.addSubview(mySmallLabel)
         
-        let displayWidth: CGFloat = self.view.frame.width
-        let displayHeight: CGFloat = self.view.frame.height
+        // Systemの標準のフォントサイズの文字列をラベルを表示する
+        let myNormalLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 30, width: 200, height: 150))
+        myNormalLabel.text = "System標準のフォントサイズ"
+        myNormalLabel.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
+        self.view.addSubview(myNormalLabel)
         
-        // TableViewの生成
-        myTableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight))
+        // UIButton用のフォントサイズの文字列をラベルに表示する
+        let myButtonLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 60, width: 300, height: 150))
+        myButtonLabel.text = "UIButtonのフォントサイズ"
+        myButtonLabel.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize)
+        self.view.addSubview(myButtonLabel)
         
-        // Cell名の登録をおこなう
-        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        // カスタムしたフォントサイズ(20)の文字列をラベルに表示する
+        let myCustomLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 90, width: 300, height: 150))
+        myCustomLabel.text = "ポイント20のフォントサイズ"
+        myCustomLabel.font = UIFont.systemFont(ofSize: CGFloat(20))
+        self.view.addSubview(myCustomLabel)
         
-        // DataSourceを自身に設定する
-        myTableView.dataSource = self
+        // Italic System Fontの文字列をラベルに表示する
+        let myItalicLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 150, width: 300, height: 150))
+        myItalicLabel.text = "Italicのフォント"
+        myItalicLabel.font = UIFont.italicSystemFont(ofSize: UIFont.labelFontSize)
+        self.view.addSubview(myItalicLabel)
         
-        // Delegateを自身に設定する
-        myTableView.delegate = self
+        // Boldの文字列をラベルに表示する
+        let myBoldLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 180, width: 300, height: 150))
+        myBoldLabel.text = "Boldフォント"
+        myBoldLabel.font = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)
+        self.view.addSubview(myBoldLabel)
         
-        // viewに追加
-        self.view.addSubview(myTableView)
+        // Arialの文字列をラベルに表示する
+        let myArialLabel: UILabel = UILabel(frame: CGRect(x: 25, y: 230, width: 300, height: 150))
+        myArialLabel.text = "ArialHebrew"
+        myArialLabel.font = UIFont(name: "ArialHebrew", size: UIFont.labelFontSize)
+        self.view.addSubview(myArialLabel)
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    /*
-     Cellの総数を返す
-     */
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myItems.count
-    }
-    
-    /*
-     Cellに値を設定する
-     */
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // 再利用するCellを取得する
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
-        // Cellに値を設定する
-        cell.textLabel!.text = "\(myItems[indexPath.row])"
-        
-        return cell
-    }
 }
 
