@@ -8,30 +8,29 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    private var myUIPicker: UIPickerView!
+    
+    private let myValues: NSArray = ["その一", "その二", "その三", "その四"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Viewの背景をCyanに設定する
-        self.view.backgroundColor = UIColor.cyan
+        // UIPickerViewを生成
+        myUIPicker = UIPickerView()
         
-        // Buttonの定義する
-        let myButton: UIButton = UIButton()
-        let buttonWidth: CGFloat = 200
-        let buttonHeight: CGFloat = 40
-        let posX: CGFloat = (self.view.bounds.width - buttonWidth) / 2
-        let posY: CGFloat = 200
-        myButton.frame = CGRect(x: posX, y: posY, width: buttonWidth, height: buttonHeight)
-        myButton.backgroundColor = UIColor.red
-        myButton.layer.masksToBounds = true
-        myButton.layer.cornerRadius = 20.0
-        myButton.setTitle("UIAlertを発動", for: .normal)
-        myButton.setTitleColor(UIColor.white, for: .normal)
-        myButton.addTarget(self, action: #selector(onClickMyButton(sender:)), for: .touchDown)
+        // サイズを指定
+        myUIPicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 180.0)
+        
+        // Delegateを設定する
+        myUIPicker.delegate = self
+        
+        // DataSourceを設定する
+        myUIPicker.dataSource = self
         
         // Viewに追加する
-        self.view.addSubview(myButton)
+        self.view.addSubview(myUIPicker)
         
     }
     
@@ -39,27 +38,32 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    /*
-     ボタンイベント
-     */
-    @objc internal func onClickMyButton(sender: UIButton) {
-        
-        // UIAlertControllerを作成する
-        let myAlert: UIAlertController = UIAlertController(title: "タイトル", message: "メッセージ", preferredStyle: .alert)
-        
-        // OKのactionを作成する
-        let myOkAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            // OKボタン押された後の処理
-            print("Action OK!")
-        }
-        
-        // OKのActionを追加する
-        myAlert.addAction(myOkAction)
-        
-        // UIAlertを発動する
-        present(myAlert, animated: true, completion: nil)
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
     
+    /*
+     pickerに表示する行数を返すデータソースメソッド(実装必須)
+     */
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return myValues.count
+    }
+    
+    /*
+    pickerに表示する値を返すデリゲートメソッド
+    */
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return myValues[row] as? String
+    }
+    
+    
+    /*
+    pickerが選択された際に呼ばれるデリゲートメソッド
+    */
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("row: \(row)")
+        print("value: \(myValues[row])")
+    }
     
 }
 
