@@ -8,33 +8,30 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIWebViewDelegate {
-    
-    private var myWebView: UIWebView!
+class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // WebViewの生成
-        myWebView = UIWebView()
+        //Viewの背景をCyanに設定する
+        self.view.backgroundColor = UIColor.cyan
         
-        // Deletegateを自身に設定
-        myWebView.delegate = self
-        
-        // WebViewのサイズを設定
-        myWebView.frame = self.view.bounds
-        
-        // URLを設定
-        let url: URL = URL(string: "https://lara-bell.com")!
-        
-        // リクエスト発行
-        let request: NSURLRequest = NSURLRequest(url: url)
-        
-        // リクエストを発行する
-        myWebView.loadRequest(request as URLRequest)
+        // Buttonの定義する
+        let myButton: UIButton = UIButton()
+        let buttonWidth: CGFloat = 200
+        let buttonHeight: CGFloat = 40
+        let posX: CGFloat = (self.view.bounds.width - buttonWidth) / 2
+        let posY: CGFloat = 200
+        myButton.frame = CGRect(x: posX, y: posY, width: buttonWidth, height: buttonHeight)
+        myButton.backgroundColor = UIColor.red
+        myButton.layer.masksToBounds = true
+        myButton.layer.cornerRadius = 20.0
+        myButton.setTitle("UIAlertを発動", for: .normal)
+        myButton.setTitleColor(UIColor.white, for: .normal)
+        myButton.addTarget(self, action: #selector(onClickMyButton(sender:)), for: .touchDown)
         
         // Viewに追加する
-        self.view.addSubview(myWebView)
+        self.view.addSubview(myButton)
         
     }
     
@@ -43,17 +40,26 @@ class ViewController: UIViewController, UIWebViewDelegate {
     }
     
     /*
-     Pageが初めて読み終わったら呼ばれる
+     ボタンイベント
      */
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        print("webViewDidStartLoad")
+    @objc internal func onClickMyButton(sender: UIButton) {
+        
+        // UIAlertControllerを作成する
+        let myAlert: UIAlertController = UIAlertController(title: "タイトル", message: "メッセージ", preferredStyle: .alert)
+        
+        // OKのactionを作成する
+        let myOkAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            // OKボタン押された後の処理
+            print("Action OK!")
+        }
+        
+        // OKのActionを追加する
+        myAlert.addAction(myOkAction)
+        
+        // UIAlertを発動する
+        present(myAlert, animated: true, completion: nil)
     }
     
-    /*
-     PageがLoadされ始めたときに呼ばれる
-     */
-    func webViewDidStartLoad(_ webView: UIWebView) {
-        print("webViewDidStartLoad")
-    }
+    
 }
 
