@@ -10,37 +10,40 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private var myScrollView: UIScrollView!
+    private var myLeftButton: UIBarButtonItem!
+    private var myRightButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        myScrollView = UIScrollView()
+        self.view.backgroundColor = UIColor.cyan
         
-        myScrollView.frame = self.view.frame
+        self.title = "My Navigation"
         
-        let myImage = UIImage(named: "sample_image.jpg")!
+        myLeftButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onClickMyButton(sender:)))
         
-        let myImageView = UIImageView()
+        myRightButton = UIBarButtonItem(title: "RightBtn", style: .plain, target: self, action: #selector(onClickMyButton(sender:)))
         
-        myImageView.image = myImage
+        myLeftButton.tag = 1
+        myRightButton.tag = 2
         
-        myImageView.frame = myScrollView.frame
-        
-        myImageView.contentMode = UIView.ContentMode.scaleAspectFill
-        
-        myScrollView.addSubview(myImageView)
-        
-        let scroll_height = myImage.size.height * (self.view.frame.width / myImage.size.width)
-        
-        myScrollView.contentSize = CGSize(width: self.view.frame.width, height: scroll_height)
-        
-        self.view.addSubview(myScrollView)
-        
+        self.navigationItem.leftBarButtonItem = myLeftButton
+        self.navigationItem.rightBarButtonItem = myRightButton
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
+    @objc func onClickMyButton(sender: UIButton) {
+        switch (sender.tag) {
+        case 1:
+            self.view.backgroundColor = UIColor.blue
+        case 2:
+            self.view.backgroundColor = UIColor.red
+        default:
+            print("error")
+        }
+    }
+    
 }
