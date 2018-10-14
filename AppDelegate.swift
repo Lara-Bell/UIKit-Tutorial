@@ -15,22 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let myFirstTab: UIViewController = FirstViewController()
-        let mySecondTab: UIViewController = SecondViewController()
-        
-        let myTabs = NSArray(objects: myFirstTab, mySecondTab)
-        
-        let myTabBarController: UITabBarController = UITabBarController()
-        
-        myTabBarController.setViewControllers(myTabs as? [UIViewController], animated: false)
-
-        // rootViewControllerにNavigationControllerを設定する
-        window?.rootViewController = myTabBarController
-        
-        // NavigationControllerを表示する
-        window?.makeKeyAndVisible()
-
-        
         // Override point for customization after application launch.
         return true
     }
