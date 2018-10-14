@@ -10,33 +10,37 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private var myScrollView: UIScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.green
+        myScrollView = UIScrollView()
         
-        let nextButton: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: 120, height: 50))
-        nextButton.backgroundColor = UIColor.red
-        nextButton.layer.masksToBounds = true
-        nextButton.setTitle("Next", for: .normal)
-        nextButton.layer.cornerRadius = 20.0
-        nextButton.layer.position = CGPoint(x: self.view.bounds.width / 2, y: self.view.bounds.height - 50)
-        nextButton.addTarget(self, action: #selector(onClickMyButton(sender:)), for: .touchUpInside)
+        myScrollView.frame = self.view.frame
         
-        self.view.addSubview(nextButton)
+        let myImage = UIImage(named: "sample_image.jpg")!
+        
+        let myImageView = UIImageView()
+        
+        myImageView.image = myImage
+        
+        myImageView.frame = myScrollView.frame
+        
+        myImageView.contentMode = UIView.ContentMode.scaleAspectFill
+        
+        myScrollView.addSubview(myImageView)
+        
+        let scroll_height = myImage.size.height * (self.view.frame.width / myImage.size.width)
+        
+        myScrollView.contentSize = CGSize(width: self.view.frame.width, height: scroll_height)
+        
+        self.view.addSubview(myScrollView)
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    @objc internal func onClickMyButton(sender: UIButton) {
-        let mySecondViewController: UIViewController = SecondViewController()
-        
-        mySecondViewController.modalTransitionStyle = .partialCurl
-        
-        self.present(mySecondViewController, animated: true, completion: nil)
     }
 
 }
