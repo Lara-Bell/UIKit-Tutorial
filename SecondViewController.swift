@@ -10,12 +10,25 @@ import UIKit
 
 class SecondViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.title = "My Second View"
+    init() {
+        super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = UIColor.green
+        
+        self.tabBarItem = UITabBarItem(tabBarSystemItem: .featured, tag: 2)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
     }
     
     override func didReceiveMemoryWarning() {

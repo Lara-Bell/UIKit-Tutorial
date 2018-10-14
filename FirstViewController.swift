@@ -10,39 +10,25 @@ import UIKit
 
 class FirstViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Controllerのタイトルを設定する
-        self.title = "My First View"
+    init() {
+        super.init(nibName: nil, bundle: nil)
         
-        // Viewの背景色をCyanに設定する
         self.view.backgroundColor = UIColor.cyan
         
-        //ボタンの定義を行う
-        let buttonWidth: CGFloat = 100
-        let buttonHeight: CGFloat = 50
-        let posX: CGFloat = (self.view.bounds.width - buttonWidth) / 2
-        let posY: CGFloat = 200
-        let myButton = UIButton(frame: CGRect(x: posX, y: posY, width: buttonWidth, height: buttonHeight))
-        myButton.backgroundColor = UIColor.orange
-        myButton.layer.masksToBounds = true
-        myButton.layer.cornerRadius = 20.0
-        myButton.setTitle("ボタン", for: .normal)
-        myButton.addTarget(self, action: #selector(onClickMyButton(sender:)), for: .touchUpInside)
-        
-        // ボタンを追加
-        self.view.addSubview(myButton)
-        
+        self.tabBarItem = UITabBarItem(tabBarSystemItem: .featured, tag: 1)
     }
     
-    @objc internal func onClickMyButton(sender: UIButton) {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        // 移動先のViewを定義
-        let secondViewController = SecondViewController()
-        
-        // SecondViewに移動する
-        self.navigationController?.pushViewController(secondViewController, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
